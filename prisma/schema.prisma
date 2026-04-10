@@ -1,13 +1,53 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgres"
+}
+
+model User {
+  id String @id @default(uuid()) @db.Uuid
+  name String
+  email String @unique
+  password String
+
+  accounts Account[]
+
+  @@map("users")
+}
+
+model Account {
+  accountNumber Int @id @map("account_number")
+  userId String @map("user_id") @db.Uuid
+  balance Decimal @default(0) @db.Money
+  lowerLimit Decimal @default(10000) @map("lower_limit") @db.Money
+  upperLimit Decimal @default(100000) @map("upper_limit") @db.Money
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions Transaction[] @relation("accountRelation")
+  transactionsTo Transaction[] @relation("accountToRelation")
+
+  @@map("accounts")
+}
+
+enum TransactionType {
+  Deposit
+  Withdraw
+  Transfer
+}
+
+model Transaction {
+  id String @id @default(uuid())
+  transactionType TransactionType @map("transaction_type")
+  accountNumber Int @map("account_number")
+  amount Decimal @db.Money
+  transferTo Int? @map("transfer_to")
+
+  account Account @relation("accountRelation", fields: [accountNumber], references: [accountNumber])
+  accountTo Account? @relation("accountToRelation", fields: [transferTo], references: [accountNumber])
+
+  @@map("transactions")
 }
