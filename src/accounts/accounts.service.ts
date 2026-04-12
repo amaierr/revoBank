@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { AccountsRepository } from './accounts.repository';
 
 @Injectable()
 export class AccountsService {
+  constructor(private readonly accountsRepository: AccountsRepository) {}
+
   create(createAccountDto: CreateAccountDto) {
+    const random10 = Math.floor(1000000000 + Math.random() * 9000000000);
+    createAccountDto.accountNumber = random10;
+    this.accountsRepository.createAccount(createAccountDto);
     return 'This action adds a new account';
   }
 
