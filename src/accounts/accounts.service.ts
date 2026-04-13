@@ -10,8 +10,8 @@ export class AccountsService {
   create(createAccountDto: CreateAccountDto) {
     const random10 = Math.floor(1000000000 + Math.random() * 9000000000);
     createAccountDto.accountNumber = random10;
-    this.accountsRepository.createAccount(createAccountDto);
-    return 'This action adds a new account';
+
+    return this.accountsRepository.createAccount(createAccountDto);
   }
 
   findAll() {

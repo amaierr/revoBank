@@ -7,12 +7,12 @@ export class AccountsRepository {
     constructor(private prisma: PrismaService) {}
 
     async createAccount(createAccountDto: CreateAccountDto){
-        await this.prisma.account.create({
+        const result = await this.prisma.account.create({
             data:{
                 userId: createAccountDto.userId,
                 accountNumber: createAccountDto.accountNumber
             }
         })
-        return "success"
+        return result
     }
 }
