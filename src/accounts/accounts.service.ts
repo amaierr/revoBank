@@ -29,15 +29,19 @@ export class AccountsService {
     return `This action returns all accounts`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} account`;
+  findAllByUserId(userId: string) {
+    return this.accountsRepository.getAccountByUserId(userId)
   }
 
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    return `This action updates a #${id} account`;
+  findOne(accountNumber: string) {
+    return this.accountsRepository.getAccountByAccountNumber(accountNumber)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} account`;
+  update(updateAccountDto: UpdateAccountDto) {
+    return this.accountsRepository.updateAccount(updateAccountDto);
+  }
+
+  remove(accountNumber: string) {
+    return this.accountsRepository.deleteAccount(accountNumber)
   }
 }

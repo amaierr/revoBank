@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CreateAccountDto } from "./dto/create-account.dto";
 import { PrismaService } from "prisma/prisma.service";
+import { UpdateAccountDto } from "./dto/update-account.dto";
 
 @Injectable()
 export class AccountsRepository {
@@ -42,6 +43,28 @@ export class AccountsRepository {
                     decrement: amount
                 }
             }
+        })
+    }
+
+    async getAccountByUserId(userId: string){
+        return await this.prisma.account.findMany({
+            where: {userId: userId}
+        })
+    }
+
+    async updateAccount(updateAccountDto: UpdateAccountDto){
+        return this.prisma.account.update({
+            where:{accountNumber: updateAccountDto.accountNumber},
+            data:{
+                lowerLimit:updateAccountDto.lowerLimit,
+                upperLimit:updateAccountDto.upperLimit
+            }
+        })
+    }
+
+    async deleteAccount(accountNumber: string){
+        return await this.prisma.account.delete({
+            where: {accountNumber: accountNumber}
         })
     }
 }

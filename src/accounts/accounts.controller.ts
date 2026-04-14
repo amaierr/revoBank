@@ -12,23 +12,28 @@ export class AccountsController {
     return this.accountsService.create(createAccountDto);
   }
 
+  @Get('/account-number/:accountNumber')
+  findOne(@Param('accountNumber') accountNumber: string) {
+    return this.accountsService.findOne(accountNumber);
+  }
+
   @Get()
   findAll() {
     return this.accountsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.accountsService.findOne(+id);
+  findAllByUserId(@Param('id') id: string) {
+    return this.accountsService.findAllByUserId(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
-    return this.accountsService.update(+id, updateAccountDto);
+  @Patch()
+  update(@Body() updateAccountDto: UpdateAccountDto) {
+    return this.accountsService.update(updateAccountDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.accountsService.remove(+id);
+    return this.accountsService.remove(id);
   }
 }
