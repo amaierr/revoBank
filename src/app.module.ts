@@ -5,14 +5,15 @@ import { UsersModule } from './users/users.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { PrismaModule } from 'prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
-    PrismaModule, UsersModule, AccountsModule, 
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
+    PrismaModule, UsersModule, AccountsModule, TransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

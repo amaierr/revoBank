@@ -15,4 +15,33 @@ export class AccountsRepository {
         })
         return result
     }
+
+    async getAccountByAccountNumber(accountNumber: string){
+        const account = await this.prisma.account.findUnique({
+            where: {accountNumber: accountNumber}
+        })
+        return account
+    }
+
+    async addBalance(accountNumber: string, amount: number){
+        await this.prisma.account.update({
+            where:{accountNumber: accountNumber},
+            data: {
+                balance: {
+                    increment: amount
+                }
+            }
+        })
+    }
+
+    async subtractBalance(accountNumber: string, amount: number){
+        await this.prisma.account.update({
+            where:{accountNumber: accountNumber},
+            data: {
+                balance: {
+                    decrement: amount
+                }
+            }
+        })
+    }
 }
