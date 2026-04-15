@@ -12,6 +12,8 @@ export class AccountsService {
     private readonly userRepository: UsersRepository
   ) {}
 
+
+
   async create(createAccountDto: CreateAccountDto) {
     const user = await this.userRepository.findById(createAccountDto.userId) 
     
@@ -25,22 +27,32 @@ export class AccountsService {
     return this.accountsRepository.createAccount(createAccountDto);
   }
 
+
+
   findAll() {
     return `This action returns all accounts`;
   }
+
+
 
   findAllByUserId(userId: string) {
     return this.accountsRepository.getAccountByUserId(userId)
   }
 
+
+
   findOne(accountNumber: string) {
     return this.accountsRepository.getAccountByAccountNumber(accountNumber)
   }
+
+
 
   update(updateAccountDto: UpdateAccountDto) {
     return this.accountsRepository.updateAccount(updateAccountDto);
   }
 
+
+  
   remove(accountNumber: string) {
     return this.accountsRepository.deleteAccount(accountNumber)
   }

@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -8,10 +8,16 @@ datasource db {
   provider = "postgres"
 }
 
+enum Role {
+  Customer
+  Admin
+}
+
 model User {
-  id String @id @default(uuid()) @db.Uuid
-  name String
-  email String @unique
+  id       String @id @default(uuid()) @db.Uuid
+  name     String
+  role     Role   @default(Customer)
+  email    String @unique
   password String
 
   accounts Account[]
@@ -20,15 +26,15 @@ model User {
 }
 
 model Account {
-  accountNumber String @db.VarChar(10) @id @map("account_number")
-  userId String @map("user_id") @db.Uuid
-  balance Decimal @default(0) @db.Money
-  lowerLimit Decimal @default(10000) @map("lower_limit") @db.Money
-  upperLimit Decimal @default(100000) @map("upper_limit") @db.Money
+  accountNumber String  @id @map("account_number") @db.VarChar(10)
+  userId        String  @map("user_id") @db.Uuid
+  balance       Decimal @default(0) @db.Money
+  lowerLimit    Decimal @default(10000) @map("lower_limit") @db.Money
+  upperLimit    Decimal @default(100000) @map("upper_limit") @db.Money
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  transactions Transaction[] @relation("accountRelation")
+  transactions   Transaction[] @relation("accountRelation")
   transactionsTo Transaction[] @relation("accountToRelation")
 
   @@map("accounts")
@@ -41,13 +47,13 @@ enum TransactionType {
 }
 
 model Transaction {
-  id String @id @default(uuid())
+  id              String          @id @default(uuid())
   transactionType TransactionType @map("transaction_type")
-  accountNumber String @db.VarChar(10) @map("account_number")
-  amount Decimal @db.Money
-  transferTo String? @db.VarChar(10) @map("transfer_to")
+  accountNumber   String          @map("account_number") @db.VarChar(10)
+  amount          Decimal         @db.Money
+  transferTo      String?         @map("transfer_to") @db.VarChar(10)
 
-  account Account @relation("accountRelation", fields: [accountNumber], references: [accountNumber])
+  account   Account  @relation("accountRelation", fields: [accountNumber], references: [accountNumber])
   accountTo Account? @relation("accountToRelation", fields: [transferTo], references: [accountNumber])
 
   @@map("transactions")

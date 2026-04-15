@@ -6,6 +6,7 @@ import { AccountsModule } from './accounts/accounts.module';
 import { PrismaModule } from 'prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { TransactionsModule } from './transactions/transactions.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { TransactionsModule } from './transactions/transactions.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    PrismaModule, UsersModule, AccountsModule, TransactionsModule,
+    PrismaModule, UsersModule, AccountsModule, TransactionsModule, AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
