@@ -31,4 +31,30 @@ export class TransactionsRepository {
 
         return result
     }
+
+    async getUserAccountsTransactions(userId: string){
+        const result = await this.prisma.account.findMany({
+            where: {userId: userId},
+            select: {
+                accountNumber: true,
+                transactions:{
+                    select: {
+                        transactionType: true,
+                        amount: true,
+                        transferTo: true,
+                        transactionDateTime: true
+                    },
+                    orderBy: {transactionDateTime: 'desc'}
+                }
+            }
+        })
+
+        return result
+    }
+
+    async getUserTransactionByAccountNumber(accountNumber: string){
+        return await this.prisma.transaction.findMany({
+            where: {accountNumber: accountNumber}
+        })
+    }
 }

@@ -47,11 +47,12 @@ enum TransactionType {
 }
 
 model Transaction {
-  id              String          @id @default(uuid())
-  transactionType TransactionType @map("transaction_type")
-  accountNumber   String          @map("account_number") @db.VarChar(10)
-  amount          Decimal         @db.Money
-  transferTo      String?         @map("transfer_to") @db.VarChar(10)
+  id                  String          @id @default(uuid())
+  transactionType     TransactionType @map("transaction_type")
+  accountNumber       String          @map("account_number") @db.VarChar(10)
+  amount              Decimal         @db.Money
+  transferTo          String?         @map("transfer_to") @db.VarChar(10)
+  transactionDateTime DateTime        @map("transaction_date_time") @default(now())
 
   account   Account  @relation("accountRelation", fields: [accountNumber], references: [accountNumber])
   accountTo Account? @relation("accountToRelation", fields: [transferTo], references: [accountNumber])

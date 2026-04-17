@@ -3,43 +3,35 @@ import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransferTransactionDto } from './dto/transfer-transaction.dto';
+import { User } from 'src/auth/decorator/user.decorator';
+import { LogedInUserDto } from '../users/dto/loged-in-user.dto';
 
 @Controller('transactions')
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Post('/deposit')
-  deposit(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionsService.deposit(createTransactionDto);
+  deposit(@User() user: LogedInUserDto, @Body() createTransactionDto: CreateTransactionDto) {
+    return this.transactionsService.deposit(user, createTransactionDto);
   }
 
   @Post('/withdraw')
-  withdraw(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionsService.withdraw(createTransactionDto);
+  withdraw(@User() user: LogedInUserDto, @Body() createTransactionDto: CreateTransactionDto) {
+    return this.transactionsService.withdraw(user, createTransactionDto);
   }
 
   @Post('/transfer')
-  transfer(@Body() transferTransactionDto: TransferTransactionDto) {
-    return this.transactionsService.transfer(transferTransactionDto);
+  transfer(@User() user: LogedInUserDto, @Body() transferTransactionDto: TransferTransactionDto) {
+    return this.transactionsService.transfer(user, transferTransactionDto);
   }
 
   @Get()
-  findAll() {
-    return this.transactionsService.findAll();
+  getUserAccountsTransactions(@User() user: LogedInUserDto) {
+    return this.transactionsService.getUserAccountsTransactions(user.id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTransactionDto: UpdateTransactionDto) {
-    return this.transactionsService.update(+id, updateTransactionDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionsService.remove(+id);
+  @Get(':account_number')
+  getUserTransactionByAccountNumber(@User() user: LogedInUserDto, @Param('account_number') accountNumber: string) {
+    return this.transactionsService.getUserTransactionByAccountNumber(user, accountNumber);
   }
 }

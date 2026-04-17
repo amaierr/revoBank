@@ -7,11 +7,11 @@ import { UpdateAccountDto } from "./dto/update-account.dto";
 export class AccountsRepository {
     constructor(private prisma: PrismaService) {}
 
-    async createAccount(createAccountDto: CreateAccountDto){
+    async createAccount(userId: string, accountNumber){
         const result = await this.prisma.account.create({
             data:{
-                userId: createAccountDto.userId,
-                accountNumber: createAccountDto.accountNumber
+                userId: userId,
+                accountNumber: accountNumber
             }
         })
         return result
@@ -65,6 +65,19 @@ export class AccountsRepository {
     async deleteAccount(accountNumber: string){
         return await this.prisma.account.delete({
             where: {accountNumber: accountNumber}
+        })
+    }
+
+    async findAll(){
+        return await this.prisma.account.findMany({
+            include: { 
+                user: {
+                    select: {
+                        name: true,
+                        email: true
+                    }
+                }
+            }
         })
     }
 }

@@ -1,4 +1,3 @@
-
 import { IsAlpha, IsEmail, IsOptional } from 'class-validator';
 
 export class UpdateUserDto {
@@ -9,5 +8,5 @@ export class UpdateUserDto {
     
     @IsEmail()
     @IsOptional()
-    email?: string
+    email: string
 }
