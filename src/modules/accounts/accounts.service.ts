@@ -3,7 +3,7 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 import { AccountsRepository } from './accounts.repository';
 import { UsersRepository } from 'src/modules/users/users.repository';
 import { ERROR_MESSAGES } from 'src/common/constants/error-messages';
-import { LogedInUserDto } from '../users/dto/loged-in-user.dto';
+import { LoggedInUserDto } from '../users/dto/logged-in-user.dto';
 import { CONSTANT } from 'src/common/constants/constant-variable';
 
 @Injectable()
@@ -45,7 +45,7 @@ export class AccountsService {
 
   /* ---------------- Find one account ---------------- */
   /* START */
-  async findOne(user: LogedInUserDto, accountNumber: string) {
+  async findOne(user: LoggedInUserDto, accountNumber: string) {
     const account = await this.accountsRepository.getAccountByAccountNumber(accountNumber)
 
     if(!account){
@@ -73,7 +73,7 @@ export class AccountsService {
   
 
   /* ---------------- Delete account ---------------- */
-  async remove(user: LogedInUserDto, accountNumber: string) {
+  async remove(user: LoggedInUserDto, accountNumber: string) {
     const account = await this.accountsRepository.getAccountByAccountNumber(accountNumber)
     if(!account){
       throw new NotFoundException(ERROR_MESSAGES.ACCOUNT.NOT_FOUND + accountNumber)

@@ -6,7 +6,7 @@ import { TransactionType } from 'generated/prisma/enums';
 import { AccountsRepository } from 'src/modules/accounts/accounts.repository';
 import { ERROR_MESSAGES } from 'src/common/constants/error-messages';
 import { TransferTransactionDto } from './dto/transfer-transaction.dto';
-import { LogedInUserDto } from '../users/dto/loged-in-user.dto';
+import { LoggedInUserDto } from '../users/dto/logged-in-user.dto';
 import { CONSTANT } from 'src/common/constants/constant-variable';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class TransactionsService {
 
   /* ---------------- Deposit money to account ---------------- */
   /* START */
-  async deposit(user: LogedInUserDto, createTransactionDto: CreateTransactionDto) {
+  async deposit(user: LoggedInUserDto, createTransactionDto: CreateTransactionDto) {
     // Validate account exist
     const account = await this.accountsRepository.getAccountByAccountNumber(createTransactionDto.accountNumber)
     if(!account){
@@ -43,7 +43,7 @@ export class TransactionsService {
 
   /* ---------------- Withdraw money from account ---------------- */
   /* START */
-  async withdraw(user: LogedInUserDto, createTransactionDto: CreateTransactionDto) {
+  async withdraw(user: LoggedInUserDto, createTransactionDto: CreateTransactionDto) {
     // Validate account exist
     const account = await this.accountsRepository.getAccountByAccountNumber(createTransactionDto.accountNumber)
     if(!account){
@@ -72,7 +72,7 @@ export class TransactionsService {
 
   /* ---------------- Transfer money ---------------- */
   /* START */
-  async transfer(user: LogedInUserDto, transferTransactionDto: TransferTransactionDto) {
+  async transfer(user: LoggedInUserDto, transferTransactionDto: TransferTransactionDto) {
     // Validate origin account exist
     const account = await this.accountsRepository.getAccountByAccountNumber(transferTransactionDto.accountNumber)
     if(!account){
@@ -109,7 +109,7 @@ export class TransactionsService {
     return await this.transactionsRepository.getUserAccountsTransactions(userId)
   }
 
-  async getUserTransactionByAccountNumber(user: LogedInUserDto, accountNumber: string) {
+  async getUserTransactionByAccountNumber(user: LoggedInUserDto, accountNumber: string) {
     // Validate account exist
     const account = await this.accountsRepository.getAccountByAccountNumber(accountNumber)
     if(!account){

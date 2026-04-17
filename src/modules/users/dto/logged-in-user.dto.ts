@@ -1,4 +1,4 @@
-export class LogedInUserDto {
+export class LoggedInUserDto {
     id: string
     name: string
     email: string

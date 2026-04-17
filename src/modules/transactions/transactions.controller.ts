@@ -4,34 +4,34 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransferTransactionDto } from './dto/transfer-transaction.dto';
 import { User } from 'src/auth/decorator/user.decorator';
-import { LogedInUserDto } from '../users/dto/loged-in-user.dto';
+import { LoggedInUserDto } from '../users/dto/logged-in-user.dto';
 
 @Controller('transactions')
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Post('/deposit')
-  deposit(@User() user: LogedInUserDto, @Body() createTransactionDto: CreateTransactionDto) {
+  deposit(@User() user: LoggedInUserDto, @Body() createTransactionDto: CreateTransactionDto) {
     return this.transactionsService.deposit(user, createTransactionDto);
   }
 
   @Post('/withdraw')
-  withdraw(@User() user: LogedInUserDto, @Body() createTransactionDto: CreateTransactionDto) {
+  withdraw(@User() user: LoggedInUserDto, @Body() createTransactionDto: CreateTransactionDto) {
     return this.transactionsService.withdraw(user, createTransactionDto);
   }
 
   @Post('/transfer')
-  transfer(@User() user: LogedInUserDto, @Body() transferTransactionDto: TransferTransactionDto) {
+  transfer(@User() user: LoggedInUserDto, @Body() transferTransactionDto: TransferTransactionDto) {
     return this.transactionsService.transfer(user, transferTransactionDto);
   }
 
   @Get()
-  getUserAccountsTransactions(@User() user: LogedInUserDto) {
+  getUserAccountsTransactions(@User() user: LoggedInUserDto) {
     return this.transactionsService.getUserAccountsTransactions(user.id);
   }
 
   @Get(':account_number')
-  getUserTransactionByAccountNumber(@User() user: LogedInUserDto, @Param('account_number') accountNumber: string) {
+  getUserTransactionByAccountNumber(@User() user: LoggedInUserDto, @Param('account_number') accountNumber: string) {
     return this.transactionsService.getUserTransactionByAccountNumber(user, accountNumber);
   }
 }
