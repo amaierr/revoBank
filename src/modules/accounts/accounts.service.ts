@@ -37,7 +37,7 @@ export class AccountsService {
   }
 
 
-  /* ---------------- Find all loged in user account ---------------- */
+  /* ---------------- Find all logged in user account ---------------- */
   findAllByUserId(userId: string) {
     return this.accountsRepository.getAccountByUserId(userId)
   }
