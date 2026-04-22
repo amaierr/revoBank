@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString, MaxLength, MinLength } from "class-validator"
-import { TransactionType } from "generated/prisma/enums"
+import { TransactionType } from "../../../../generated/prisma/enums"
 
 export class TransferTransactionDto {
     @IsNotEmpty()

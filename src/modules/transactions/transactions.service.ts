@@ -1,8 +1,7 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { TransactionsRepository } from './transaction.repository';
-import { TransactionType } from 'generated/prisma/enums';
+import { TransactionType } from '../../../generated/prisma/enums';
 import { AccountsRepository } from 'src/modules/accounts/accounts.repository';
 import { ERROR_MESSAGES } from 'src/common/constants/error-messages';
 import { TransferTransactionDto } from './dto/transfer-transaction.dto';
