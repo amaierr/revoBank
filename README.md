@@ -33,6 +33,7 @@ Click [here](https://revobank.onrender.com/) to access the link for deployed app
 - **Password Hashing:** bcrypt  
 - **Database:** PostgreSQL  
 - **Package Manager:** pnpm  
+- **Deployemnt:** render (application) & supabase (db)
 
 ---
 
